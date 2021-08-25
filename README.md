@@ -1,9 +1,24 @@
 # Object Detection using Low-light Images
-This project implements a Faster R-CNN model using TensorFlow's Object Detection API to identify objects in images taken in low light.
+This project implements a Faster R-CNN model using TensorFlow's Object Detection API to identify objects in images taken from the ExDark dataset.
+
+16112105 -Ajit Joy
 
 ## Training the model
+### Structuring the data
+The original structure of the dataset is modified to look like this:
+
+```
+/low-light-detection
+├── data
+│   ├── annotations
+│   ├── test
+│   ├── train
+```
+
+where `annotations` contains all the annotation text files, `test` contains ~20% of the images from each of the 12 classes, and `train` contains ~80% of the images from each class.
+
 ### Converting annotations to CSV
-The annotations are converted to CSV using `txt_to_csv.py` so that they can be used to generate the required TFRecord files. From within the repo folder, run:
+The annotations are converted to CSV using `txt_to_csv.py` so that they can be used to generate the required TFRecord files. From within the repo folder (/low-light-detection), run:
 
 `python txt_to_csv.py train`
 
@@ -34,6 +49,59 @@ To simply test the detector locally, download the trained model from [here](http
 - Ensure that the images in `PATH_TO_TEST_IMAGES_DIR` are of the format `image1.jpg`, `image2.jpg`, and so on
 - Modify the loop in `TEST_IMAGE_PATHS` if there are less/more than 4 images
 
+## References
+1. [Exclusively Dark (ExDark) Image Dataset](https://github.com/cs-chan/Exclusively-Dark-Image-Dataset)
+2. [Creating your own object detector](https://towardsdatascience.com/creating-your-own-object-detector-ad69dda69c85)
+3. [How to train your own Object Detector with TensorFlow’s Object Detector API](http://towardsdatascience.com/how-to-train-your-own-object-detector-with-tensorflows-object-detector-api-bec72ecfe1d9)
+4. [Object Detection in Google Colab with Custom Dataset](https://hackernoon.com/object-detection-in-google-colab-with-custom-dataset-5a7bb2b0e97e)
+
+
+# Custom low light detection
+
+This project sets up and uses TensorFlow’s Object Detection API to perform object detection in images.
+## Tensorflow
+
+```
+TensorFlow/
+├─ addons/ (Optional)
+│  └─ labelImg/
+├─ models/
+│  ├─ community/
+│  ├─ official/
+│  ├─ orbit/
+│  ├─ research/
+│  └─ ...
+├─ scripts/
+│  └─ preprocessing/
+└─ workspace/
+   └─ training_demo/
+```
+
+## Training Demo
+
+```
+training_demo/
+├─ ...
+├─ pre-trained-models/
+│  ├─ efficientdet_d1_coco17_tpu-32/
+│  │  ├─ checkpoint/
+│  │  ├─ saved_model/
+│  │  └─ pipeline.config
+│  └─ ssd_resnet50_v1_fpn_640x640_coco17_tpu-8/
+│     ├─ checkpoint/
+│     ├─ saved_model/
+│     └─ pipeline.config
+└─ ...
+```
+
+## References
+
+1. [Tensorflow GitHub](https://github.com/tensorflow/models.git)
+2. [Model Zoo](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf2_detection_zoo.md)
+3. [Object Detection Tutorial](https://tensorflow-object-detection-api-tutorial.readthedocs.io/en/latest/index.html)
+
+
+
 ## Dependencies and configurations
 ### Local
 - Python: 3.5.4 (64-bit)
@@ -47,8 +115,3 @@ To simply test the detector locally, download the trained model from [here](http
 ### Google Colab
 - Runtime type: Python 3
 - Hardware accelerator: GPU
-
-## References
-1. [Creating your own object detector](https://towardsdatascience.com/creating-your-own-object-detector-ad69dda69c85)
-2. [How to train your own Object Detector with TensorFlow’s Object Detector API](http://towardsdatascience.com/how-to-train-your-own-object-detector-with-tensorflows-object-detector-api-bec72ecfe1d9)
-3. [Object Detection in Google Colab with Custom Dataset](https://hackernoon.com/object-detection-in-google-colab-with-custom-dataset-5a7bb2b0e97e)
